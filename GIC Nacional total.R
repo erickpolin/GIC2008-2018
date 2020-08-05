@@ -21,12 +21,20 @@ GICNacionalTotal<-GICNacionalTotal%>%
   mutate(Rate=((Year2018-Year2008)/Year2008)*100,Deciles=c("I","II","III","IV","V","VI","VII","VIII","IX","X"),
          orden=1:10)
 
+theme_update(plot.title = element_text(hjust = 0.5))
 
 GIC_Nacional_total<-GICNacionalTotal%>%
   mutate(Deciles=fct_relevel(Deciles,"I","II","III","IV","V","VI","VII","VIII","IX","X"))%>%
   ggplot(aes(Deciles,Rate))+
   geom_col()+
+  ggtitle("Growth Incidence Curve
+          Mexico (2008-2018)")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ylab("Rate growth (total)")+
+  xlab("Decile")+
   theme_minimal()
+
+GIC_Nacional_total
 
 GIC_Nacional_total<-ggplotly(GIC_Nacional_total)
 
