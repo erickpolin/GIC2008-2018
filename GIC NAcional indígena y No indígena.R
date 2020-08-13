@@ -74,5 +74,4 @@ GIC_por_raza<-GIC_nacional_por_raza_derretida%>%
 
 GIC_por_raza
 
-
 ggplotly(GIC_por_raza)
