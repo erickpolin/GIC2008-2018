@@ -27,63 +27,134 @@ Deciles_por_fuente_2018$TRABAJO2018+Deciles_por_fuente_2018$RENTAS2018+
   Deciles_por_fuente_2018$`TRANS INST2018`+Deciles_por_fuente_2018$`ESTIM ALQU2018`+
   Deciles_por_fuente_2018$`OTROS INGRESOS2018`
 
+
 Tasa_total<-((Deciles_por_fuente_2018$`ING COR2018`- Deciles_por_fuente_2008$`ING COR2008`)/Deciles_por_fuente_2008$`ING COR2008`)*100
 media_total<-Tasa_total[1]
 Tasa_total<-Tasa_total[-1]
 
+########################## Trabajo ##########################################
 
-Tasa_trabajo<-((Deciles_por_fuente_2018$TRABAJO2018-Deciles_por_fuente_2008$TRABAJO2008)/Deciles_por_fuente_2008$TRABAJO2008)*100
-media_trabajo<-Tasa_trabajo[1]
-Tasa_trabajo<-Tasa_trabajo[-1]  
+trabajo<-data.frame(trabajo2008=Deciles_por_fuente_2008$TRABAJO2008,trabajo2018=Deciles_por_fuente_2018$TRABAJO2018,
+                    ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                    ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                    Tasa_total)
 
+trabajo<-trabajo%>%
+  mutate(trabajo_aporte=((trabajo2018-trabajo2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
-Tasa_rentas<-((Deciles_por_fuente_2018$RENTAS2018-Deciles_por_fuente_2008$RENTAS2008)/Deciles_por_fuente_2008$RENTAS2008)*100
-media_rentas<-Tasa_rentas[1]
-Tasa_rentas<-Tasa_rentas[-1]
+################################### Rentas ########################################
 
+rentas<-data.frame(rentas2008=Deciles_por_fuente_2008$RENTAS2008,rentas2018=Deciles_por_fuente_2018$RENTAS2018,
+                   ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                   ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                   Tasa_total)
+rentas<-rentas%>%
+  mutate(rentas_aporte=((rentas2018-rentas2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
-Tasa_jubilaciones<-((Deciles_por_fuente_2018$JUBILACION2018-Deciles_por_fuente_2008$JUBILACION2008)/Deciles_por_fuente_2008$JUBILACION2008)*100
-media_jubilaciones<-Tasa_jubilaciones[1]
-Tasa_jubilaciones<-Tasa_jubilaciones[-1]
+################################### Jubilaciones ########################################
 
-Tasa_becas<-((Deciles_por_fuente_2018$BECAS2018-Deciles_por_fuente_2008$BECAS2008)/ Deciles_por_fuente_2008$BECAS2008)*100
-media_becas<-Tasa_becas[1]
-Tasa_becas<-Tasa_becas[-1]  
-  
+jubilaciones<-data.frame(jubilaciones2008=Deciles_por_fuente_2008$JUBILACION2008,jubilaciones2018=Deciles_por_fuente_2018$JUBILACION2018,
+                         ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                         ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                         Tasa_total)
+jubilaciones<-jubilaciones%>%
+  mutate(jubilaciones_aporte=((jubilaciones2018-jubilaciones2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
-Tasa_donativos<-((Deciles_por_fuente_2018$DONATIVOS2018-Deciles_por_fuente_2008$DONATIVOS2008)/Deciles_por_fuente_2008$DONATIVOS2008)*100
-media_donativos<-Tasa_donativos[1]
-Tasa_donativos<-Tasa_donativos[-1]
+################################### Becas ########################################
+becas<-data.frame(becas2008=Deciles_por_fuente_2008$BECAS2008,becas2018=Deciles_por_fuente_2018$BECAS2018,
+                  ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                  ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                  Tasa_total)
+becas<-becas%>%
+  mutate(becas_aporte=((becas2018-becas2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
+################################### Donativos ########################################
 
-Tasa_remesas<-((Deciles_por_fuente_2018$REMESAS2018-Deciles_por_fuente_2008$REMESAS2008)/Deciles_por_fuente_2008$REMESAS2008)*100
-media_remesas<-Tasa_remesas[1]
-Tasa_remesas<-Tasa_remesas[-1]
+donativos<-data.frame(donativos2008=Deciles_por_fuente_2008$DONATIVOS2008,donativos2018=Deciles_por_fuente_2018$DONATIVOS2018,
+                      ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                      ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                      Tasa_total)
 
+donativos<-donativos%>%
+  mutate(donativos_aporte=((donativos2018-donativos2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
-Tasa_benegobierno<-(Deciles_por_fuente_2018$BENEGOBIERNO2018-Deciles_por_fuente_2008$BENEGOBIERNO2008)/Deciles_por_fuente_2008$BENEGOBIERNO2008
-media_benegobierno<-Tasa_benegobierno[1]
-Tasa_benegobierno<-Tasa_benegobierno[-1]
+################################### Remesas ########################################
 
+remesas<-data.frame(remesas2008=Deciles_por_fuente_2008$REMESAS2008,remesas2018=Deciles_por_fuente_2018$REMESAS2018,
+                    ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                    ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                    Tasa_total)
 
-Tasa_transdehogares<-((Deciles_por_fuente_2018$`TRANS HOG2018`-Deciles_por_fuente_2008$`TRANS HOG2008`)/Deciles_por_fuente_2008$`TRANS HOG2008`)*100
-media_transdehogares<-Tasa_transdehogares[1]
-Tasa_transdehogares<-Tasa_transdehogares[-1]
+remesas<-remesas%>%
+  mutate(remesas_aporte=((remesas2018-remesas2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
+################################### Benegobierno ########################################
 
-Tasa_instituciones<-((Deciles_por_fuente_2018$`TRANS INST2018`-Deciles_por_fuente_2008$`TRANS INST2008`)/Deciles_por_fuente_2008$`TRANS INST2008`)*100
-media_instituciones<-Tasa_instituciones[1]
-Tasa_instituciones<-Tasa_instituciones[-1]
+benegobierno<-data.frame(benegob2008=Deciles_por_fuente_2008$BENEGOBIERNO2008,
+                         benegob2018=Deciles_por_fuente_2018$BENEGOBIERNO2018,
+                         ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                         ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                         Tasa_total)
 
+benegobierno<-benegobierno%>%
+  mutate(benegob_aporte=((benegob2018-benegob2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
-Tasa_alquiler<-((Deciles_por_fuente_2018$`ESTIM ALQU2018`-Deciles_por_fuente_2008$`ESTIM ALQU2008`)/Deciles_por_fuente_2008$`ESTIM ALQU2008`)*100
-media_alquiler<-Tasa_alquiler[1]
-Tasa_alquiler<-Tasa_alquiler[-1]
+################################### Transdehogares ########################################
 
-Tasa_otros<-((Deciles_por_fuente_2018$`OTROS INGRESOS2018`-Deciles_por_fuente_2008$`OTROS INGRESOS2008`)/Deciles_por_fuente_2008$`OTROS INGRESOS2008`)*100
-media_otros<-Tasa_otros[1]
-Tasa_otros<-Tasa_otros[-1]
+transdehogares<-data.frame(transdehogares2008=Deciles_por_fuente_2008$`TRANS HOG2008`, 
+                           transdehogares2018=Deciles_por_fuente_2018$`TRANS HOG2018`,
+                           ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                           ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                           Tasa_total)
 
-Tasas<-data.frame(Tasa_total,Tasa_trabajo,Tasa_rentas,Tasa_jubilaciones,Tasa_becas,Tasa_donativos,Tasa_remesas,Tasa_benegobierno,
-Tasa_transdehogares,Tasa_instituciones,Tasa_alquiler,Tasa_otros)
+transdehogares<-transdehogares%>%
+  mutate(transdehogares_aporte=((transdehogares2018-transdehogares2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
 
+################################### instituciones ########################################
+
+instituciones<-data.frame(instituciones2008=Deciles_por_fuente_2008$`TRANS INST2008`, 
+                          instituciones2018=Deciles_por_fuente_2018$`TRANS INST2018`,
+                          ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                          ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                          Tasa_total)
+
+instituciones<-instituciones%>%
+  mutate(instituciones_aporte=((instituciones2018-instituciones2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
+
+################################### alquiler ########################################
+
+alquiler<-data.frame(alquiler2008=Deciles_por_fuente_2008$`ESTIM ALQU2008`,alquiler2018=Deciles_por_fuente_2018$`ESTIM ALQU2018`,
+                     ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                     ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                     Tasa_total)
+alquiler<-alquiler%>%
+  mutate(alquiler_aporte=((alquiler2018-alquiler2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
+
+################################### otros ########################################
+
+otros<-data.frame(otros2008=Deciles_por_fuente_2008$`OTROS INGRESOS2008`,
+                  otros2018=Deciles_por_fuente_2018$`OTROS INGRESOS2018`,
+                  ing_cor2008=Deciles_por_fuente_2008$`ING COR2008`,
+                  ing_cor2018=Deciles_por_fuente_2018$`ING COR2018`,
+                  Tasa_total)
+otros<-otros%>%
+  mutate(otros_aporte=((otros2018-otros2008)/((ing_cor2018-ing_cor2008)))*Tasa_total)
+
+################################### Cuadro final ########################################
+
+cuadro_final<-data.frame(
+  trabajo=trabajo$trabajo_aporte,
+  rentas=rentas$rentas_aporte,
+  jubilaciones=jubilaciones$jubilaciones_aporte,
+  becas=becas$becas_aporte,
+  donativos=donativos$donativos_aporte,
+  remesas=remesas$remesas_aporte,
+  benegobierno=benegobierno$benegob_aporte,
+  transdehogares=transdehogares$transdehogares_aporte,
+  instituciones=instituciones$instituciones_aporte,
+  alquiler=alquiler$alquiler_aporte,
+  otros=otros$otros_aporte,
+  Tasa_total=Tasa_total)
+
+cuadro_final<-cuadro_final%>%
+  mutate(prueba=trabajo+rentas+jubilaciones+becas+donativos+remesas+benegobierno+transdehogares+instituciones+alquiler+otros)
