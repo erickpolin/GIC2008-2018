@@ -2,6 +2,7 @@ library(foreign)
 library(tidyverse)
 library(plotly)
 library(htmlwidgets)
+library(reshape2)
 
 setwd(c("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/GIC2008-2018/GIC2008-2018"))
 
@@ -29,8 +30,7 @@ Deciles_por_fuente_2018$TRABAJO2018+Deciles_por_fuente_2018$RENTAS2018+
 
 
 Tasa_total<-((Deciles_por_fuente_2018$`ING COR2018`- Deciles_por_fuente_2008$`ING COR2008`)/Deciles_por_fuente_2008$`ING COR2008`)*100
-media_total<-Tasa_total[1]
-Tasa_total<-Tasa_total[-1]
+
 
 ########################## Trabajo ##########################################
 
@@ -143,18 +143,55 @@ otros<-otros%>%
 ################################### Cuadro final ########################################
 
 cuadro_final<-data.frame(
-  trabajo=trabajo$trabajo_aporte,
-  rentas=rentas$rentas_aporte,
-  jubilaciones=jubilaciones$jubilaciones_aporte,
-  becas=becas$becas_aporte,
-  donativos=donativos$donativos_aporte,
-  remesas=remesas$remesas_aporte,
-  benegobierno=benegobierno$benegob_aporte,
-  transdehogares=transdehogares$transdehogares_aporte,
-  instituciones=instituciones$instituciones_aporte,
-  alquiler=alquiler$alquiler_aporte,
-  otros=otros$otros_aporte,
-  Tasa_total=Tasa_total)
+  Labor=trabajo$trabajo_aporte,
+  Capital=rentas$rentas_aporte,
+  Pensions=jubilaciones$jubilaciones_aporte,
+  Scholarships=becas$becas_aporte,
+  Donations=donativos$donativos_aporte,
+  Remittances=remesas$remesas_aporte,
+  "Government transfers"=benegobierno$benegob_aporte,
+  "Household transfers"=transdehogares$transdehogares_aporte,
+  "Instituion transfers"=instituciones$instituciones_aporte,
+  "Rent estimate"=alquiler$alquiler_aporte,
+  Others=otros$otros_aporte)
+
+
+names(cuadro_final)<-c("Labor","Capital","Pensions","Scholarships","Donations","Remittances","Government transfers",
+                       "Household transfers","Instituion transfers","Rent estimate","Others")
+
 
 cuadro_final<-cuadro_final%>%
-  mutate(prueba=trabajo+rentas+jubilaciones+becas+donativos+remesas+benegobierno+transdehogares+instituciones+alquiler+otros)
+  mutate(Deciles= c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
+
+row.names(cuadro_final)<-c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X")
+
+cuadro_final<-melt(cuadro_final)
+
+GIC<-cuadro_final%>%
+  mutate(Deciles=fct_relevel(Deciles,"Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))%>%
+  ggplot(aes(x=Deciles, y=value , fill= variable),position= "dodge")+
+  geom_col()+
+  labs(title = "Growth Incidence Curve Mexico 2008-2018",
+       y="Growth rate (total)",
+       x="Decile",
+       fill="Source of
+  income")+
+    geom_hline(yintercept = 0)+
+  annotate("text", x= "Total", y= -11.29, label="-9.29")+
+  annotate("text", x= "I", y= 11.25, label="9.25")+
+  annotate("text", x= "II", y= 8.22, label="6.22")+
+  annotate("text", x= "III", y= 5.45, label="3.45")+
+  annotate("text", x= "IV", y= 4.26, label="2.26")+
+  annotate("text", x= "V", y= 2.25, label="0.25")+
+  annotate("text", x= "VI", y= -4.40, label="-2.40")+
+  annotate("text", x= "VII", y= -7.60, label="-5.60")+
+  annotate("text", x= "VIII", y= -9.91, label="-7.91")+
+  annotate("text", x= "IX", y= -13.83, label="-11.83")+
+  annotate("text", x= "X", y= -19.16, label="-17.16")+
+  coord_cartesian(ylim = c(-19, 12),)+
+  scale_y_continuous(breaks=seq(-19,12,1))+
+  theme_minimal()
+ 
+GIC
+
+ggplotly(GIC)
