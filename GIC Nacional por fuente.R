@@ -6,7 +6,7 @@ library(reshape2)
 
 setwd(c("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/GIC2008-2018/GIC2008-2018"))
 
-Deciles_por_fuente_2008<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/Nacional Ingresos por fuente por DECIL estimaciones 2008.dbf")
+Deciles_por_fuente_2008<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/Total/Nacional Ingresos por fuente por DECIL estimaciones 2008.dbf")
 
 names(Deciles_por_fuente_2008)=c("ING COR2008", "TRABAJO2008", "SUBORDINADO2008", "NEGOCIOS2008","OTROS TRAB2008", "RENTAS2008","UTILIDAD2008", "ARRENDA2008", "TRANSFER2008","JUBILACION2008", "BECAS2008", "DONATIVOS2008", "REMESAS2008", "BENEGOBIERNO2008", "TRANS HOG2008", "TRANS INST2008", "ESTIM ALQU2008", "OTROS INGRESOS2008")
 
@@ -17,7 +17,7 @@ Deciles_por_fuente_2008$TRABAJO2008+Deciles_por_fuente_2008$RENTAS2008+
   Deciles_por_fuente_2008$`TRANS INST2008`+Deciles_por_fuente_2008$`ESTIM ALQU2008`+
   Deciles_por_fuente_2008$`OTROS INGRESOS2008`
 
-Deciles_por_fuente_2018<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/Nacional Ingresos por fuente por DECIL estimaciones.dbf")
+Deciles_por_fuente_2018<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/Total/Nacional Ingresos por fuente por DECIL estimaciones.dbf")
 
 names(Deciles_por_fuente_2018)=c("ING COR2018", "TRABAJO2018", "SUBORDINADO2018", "NEGOCIOS2018","OTROS TRAB2018", "RENTAS2018","UTILIDAD2018", "ARRENDA2018", "TRANSFER2018","JUBILACION2018", "BECAS2018", "DONATIVOS2018", "REMESAS2018", "BENEGOBIERNO2018", "TRANS HOG2018", "TRANS INST2018", "ESTIM ALQU2018", "OTROS INGRESOS2018")
 
@@ -155,6 +155,11 @@ cuadro_final<-data.frame(
   "Rent estimate"=alquiler$alquiler_aporte,
   Others=otros$otros_aporte)
 
+#cuadro_final<-cuadro_final%>%
+  #mutate(Prueba=Labor+Capital+Pensions+Scholarships+Donations+Remittances+Government.transfers+Household.transfers+
+           #Instituion.transfers+Rent.estimate+Others)
+
+
 
 names(cuadro_final)<-c("Labor","Capital","Pensions","Scholarships","Donations","Remittances","Government transfers",
                        "Household transfers","Instituion transfers","Rent estimate","Others")
@@ -177,21 +182,23 @@ GIC<-cuadro_final%>%
        fill="Source of
   income")+
     geom_hline(yintercept = 0)+
-  annotate("text", x= "Total", y= -11.29, label="-9.29")+
-  annotate("text", x= "I", y= 11.25, label="9.25")+
-  annotate("text", x= "II", y= 8.22, label="6.22")+
-  annotate("text", x= "III", y= 5.45, label="3.45")+
-  annotate("text", x= "IV", y= 4.26, label="2.26")+
-  annotate("text", x= "V", y= 2.25, label="0.25")+
-  annotate("text", x= "VI", y= -4.40, label="-2.40")+
-  annotate("text", x= "VII", y= -7.60, label="-5.60")+
-  annotate("text", x= "VIII", y= -9.91, label="-7.91")+
-  annotate("text", x= "IX", y= -13.83, label="-11.83")+
-  annotate("text", x= "X", y= -19.16, label="-17.16")+
-  coord_cartesian(ylim = c(-19, 12),)+
-  scale_y_continuous(breaks=seq(-19,12,1))+
+  annotate("text", x= "Total", y= -11.5, label="-9.29")+
+  annotate("text", x= "I", y= 13.5, label="9.25")+
+  annotate("text", x= "II", y= 10.5, label="6.22")+
+  annotate("text", x= "III", y= 9.5, label="3.45")+
+  annotate("text", x= "IV", y= 6.5, label="2.26")+
+  annotate("text", x= "V", y= 4.5, label="0.25")+
+  annotate("text", x= "VI", y= -5.5, label="-2.40")+
+  annotate("text", x= "VII", y= -9.5, label="-5.60")+
+  annotate("text", x= "VIII", y= -11.5, label="-7.91")+
+  annotate("text", x= "IX", y= -15.5, label="-11.83")+
+  annotate("text", x= "X", y= -21.5, label="-17.16")+
+  coord_cartesian(ylim = c(-24, 14),)+
+  scale_y_continuous(breaks=seq(-25,15,1))+
   theme_minimal()
  
 GIC
 
 ggplotly(GIC)
+
+
