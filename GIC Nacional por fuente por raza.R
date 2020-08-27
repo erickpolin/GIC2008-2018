@@ -155,15 +155,14 @@ Cuadro_indigena<-data.frame(Trabajo_indigena$trabajo_aporte,
                             Trans_hogares_indigena$transdehogares_aporte,
                             Instituciones_indigena$instituciones_aporte,
                             Alquiler_indigena$alquiler_aporte,
-                            Otros_indigena$otros_aporte,
-                            Tasa_total_indigena)
+                            Otros_indigena$otros_aporte)
 
 #Cuadro_indigena<-Cuadro_indigena%>%
  # mutate(Prueba=Trabajo_indigena.trabajo_aporte+Renta_indigena.rentas_aporte+Jubilaciones_indigena.jubilaciones_aporte+Becas_indigena.becas_aporte+Donativos_indigena.donativos_aporte+Remesas_indigena.remesas_aporte+Benegob_indigena.benegob_aporte+Trans_hogares_indigena.transdehogares_aporte+Instituciones_indigena.instituciones_aporte+Alquiler_indigena.alquiler_aporte+Otros_indigena.otros_aporte)
 
 
 names(Cuadro_indigena)<-c("Labor","Capital","Pensions","Scholarships","Donations","Remittances","Government transfers",
-                       "Household transfers","Instituion transfers","Rent estimate","Others","Total")                             
+                       "Household transfers","Instituion transfers","Rent estimate","Others")                             
 
                              
                              
@@ -317,8 +316,7 @@ Cuadro_NO<-data.frame(Trabajo_NO$Trabajo_aporte,
                       trans_hog_NO$trans_hog_aporte,
                       trans_inst_NO$trans_inst_aporte,
                       Estim_alqu_NO$estim_aporte,
-                      Otros_NO$otors_aporte,
-                      Tasa_total_NO)  
+                      Otros_NO$otors_aporte)  
 
 #Cuadro_NO<-Cuadro_NO%>%mutate(prueba_de_fuego=Trabajo_NO.Trabajo_aporte+Rentas_NO.rentas_aporte+Jubilacion_NO.jubilacion_aporte+
            #Becas_NO.becas_aporte+
@@ -330,9 +328,9 @@ Cuadro_NO<-data.frame(Trabajo_NO$Trabajo_aporte,
            #Estim_alqu_NO.estim_aporte+
            #Otros_NO.otors_aporte)
 names(Cuadro_NO)<-c("Labor","Capital","Pensions","Scholarships","Donations","Remittances","Government transfers",
-                          "Household transfers","Instituion transfers","Rent estimate","Others","Total")      
+                          "Household transfers","Instituion transfers","Rent estimate","Others")      
 
-######### Gráficos
+######### Construcción del cuadro final para el gráfico
 
 Cuadro_indigena<-Cuadro_indigena%>%
   mutate("Ethnic group"="Indigenous", Deciles=c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
@@ -345,3 +343,29 @@ Cuadro_NO<-Cuadro_NO%>%
 NO_melt<-melt(Cuadro_NO)
 
 Cuadro_final<-rbind(indigena_melt,NO_melt)
+
+Cuadro_final<-Cuadro_final%>%
+  mutate(Deciles=fct_relevel(Deciles,"Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
+
+###### Gráfico
+
+GIC<-Cuadro_final%>%
+  ggplot(aes(x=Deciles, y=value, fill= variable, group=`Ethnic group`))+
+  geom_col(data=Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Indigenous"), 
+           width=0.3, position = position_nudge(x=0.19))+
+  geom_col(data=Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Non-indigenous"),
+           width=0.3, position = position_nudge(x=-0.19))+
+  labs(title = "Growth Incidence Curve by ethnic group, 2008-2018",
+       subtitle = "by ethnic group",
+       y="Growth rate (total)",
+       x="Decile",
+       fill="Source of
+  income")+
+  theme_minimal()
+           
+           
+           
+ggplotly(GIC)
+
+
+
