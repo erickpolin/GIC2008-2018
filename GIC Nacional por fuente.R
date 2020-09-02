@@ -204,7 +204,7 @@ GIC<-ggplotly(GIC)
 
 GIC
 
-saveWidget(GIC, file="C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/Entrega septiembre/Growth Incidence Curve Mexico 2008-2018.html")
+saveWidget(GIC, file="C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/Entrega septiembre/Growth Incidence Curve Mexico by source of income 2008-2018.html")
 
 
 
