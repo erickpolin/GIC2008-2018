@@ -156,17 +156,16 @@ cuadro_final<-data.frame(
   "Household transfers"=transdehogares$transdehogares_aporte,
   "Instituion transfers"=instituciones$instituciones_aporte,
   "Rent estimate"=alquiler$alquiler_aporte,
-  Others=otros$otros_aporte,
-  Tasa_total)
+  "Others"=otros$otros_aporte)
 
-cuadro_final<-cuadro_final%>%
-  mutate(Prueba=Labor+Capital+Pensions+Scholarships+Donations+Remittances+Government.transfers+Household.transfers+
-           Instituion.transfers+Rent.estimate+Others)
+#cuadro_final<-cuadro_final%>%
+ # mutate(Prueba=Labor+Capital+Pensions+Scholarships+Donations+Remittances+Government.transfers+Household.transfers+
+  #         Instituion.transfers+Rent.estimate+Others)
 
 
 
 names(cuadro_final)<-c("Labor","Capital","Pensions","Scholarships","Donations","Remittances","Government transfers",
-                       "Household transfers","Instituion transfers","Rent estimate","Others")
+                       "Household transfers","Instituion transfers","Imputed rent","Others")
 
 
 cuadro_final<-cuadro_final%>%
@@ -201,8 +200,11 @@ GIC<-cuadro_final%>%
   scale_y_continuous(breaks=seq(-25,15,1))+
   theme_minimal()
  
+GIC<-ggplotly(GIC)
+
 GIC
 
-ggplotly(GIC)
+saveWidget(GIC, file="C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/Entrega septiembre/Growth Incidence Curve Mexico 2008-2018.html")
+
 
 

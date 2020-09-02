@@ -350,10 +350,8 @@ Cuadro_final<-Cuadro_final%>%
 ###### Gráfico
 
 GIC<-Cuadro_final%>%
-  ggplot(aes(x=Deciles, y=value, fill= variable, group=`Ethnic group`))+
-  geom_col(data=Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Indigenous"), 
-           width=0.3, position = position_nudge(x=0.19))+
-  geom_col(data=Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Non-indigenous"),
+ggplot(aes(x=Deciles, y=value, fill= variable, group=`Ethnic group`))+
+  geom_col(data = Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Non-indigenous"),
            width=0.3, position = position_nudge(x=-0.19))+
   labs(title = "Growth Incidence Curve by ethnic group, 2008-2018",
        subtitle = "by ethnic group",
@@ -361,7 +359,26 @@ GIC<-Cuadro_final%>%
        x="Decile",
        fill="Source of
   income")+
+  scale_y_continuous(breaks = seq(-12,9,1))
+
+
+
+
+  annotate("text", label = round(Tasa_total_NO[1],digits = 2),
+           x = 0.8, y = 1.5, size = 3, colour = "black")+
+  annotate("text", label = round(Tasa_total_indigena[1],digits = 2),
+           x = 1.2, y = 2.8, size = 3, colour = "black")+
+  annotate("text", label = round(Tasa_total_NO[2],digits = 2),
+           x = 1.8, y = 5.5, size = 3, colour = "black")+
+  annotate("text", label = round(Tasa_total_indigena[2],digits = 2),
+           x = 2.2, y = 7.5, size = 3, colour = "black")+
+  annotate("text", label = round(Tasa_total_NO[3],digits = 2),
+           x = 2.8, y = 3.2, size = 3, colour = "black")+
+  annotate("text", label = round(Tasa_total_indigena[3],digits = 2),
+           x = 3.2, y = 5.6, size = 3, colour = "black")+
+  
   theme_minimal()
+  
            
            
            
