@@ -337,10 +337,16 @@ Cuadro_indigena<-Cuadro_indigena%>%
 
 indigena_melt<-melt(Cuadro_indigena)
 
+indigena_melt<-indigena_melt%>%
+  mutate(Deciles=fct_relevel(Deciles,"Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
+
 Cuadro_NO<-Cuadro_NO%>%
   mutate("Ethnic group"="Non-indigenous", Deciles=c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
 
 NO_melt<-melt(Cuadro_NO)
+
+NO_melt<-NO_melt%>%
+  mutate(Deciles=fct_relevel(Deciles,"Total","I","II","III","IV","V","VI","VII","VIII","IX","X"))
 
 Cuadro_final<-rbind(indigena_melt,NO_melt)
 
@@ -349,17 +355,28 @@ Cuadro_final<-Cuadro_final%>%
 
 ###### Gráfico
 
-GIC<-Cuadro_final%>%
-ggplot(aes(x=Deciles, y=value, fill= variable, group=`Ethnic group`))+
-  geom_col(data = Cuadro_final%>%filter(Cuadro_final$`Ethnic group`=="Non-indigenous"),
-           width=0.3, position = position_nudge(x=-0.19))+
+barwidth = 0.35
+
+GIC<-ggplot()+
+  geom_col(data = indigena_melt, mapping=aes(x=as.numeric(Deciles)-0.2, y=value, fill= as.factor(variable), group=`Ethnic group`),
+           width = 0.25)+
+ geom_col(data = NO_melt, mapping=aes(x=as.numeric(Deciles)+0.2, y=value, fill= as.factor(variable), group=`Ethnic group`),
+      width = 0.25)+
   labs(title = "Growth Incidence Curve by ethnic group, 2008-2018",
        subtitle = "by ethnic group",
        y="Growth rate (total)",
        x="Decile",
        fill="Source of
   income")+
-  scale_y_continuous(breaks = seq(-12,9,1))
+  scale_y_continuous(breaks = seq(-20,15,1))+
+  scale_x_continuous(breaks = seq(1,11,1),labels = c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X") )+
+  geom_hline(yintercept = 0)+
+  theme(axis.text.x = element_blank())+
+  theme_minimal()
+  
+ggplotly(GIC)
+
+
 
 
 
@@ -376,13 +393,16 @@ ggplot(aes(x=Deciles, y=value, fill= variable, group=`Ethnic group`))+
            x = 2.8, y = 3.2, size = 3, colour = "black")+
   annotate("text", label = round(Tasa_total_indigena[3],digits = 2),
            x = 3.2, y = 5.6, size = 3, colour = "black")+
+
+    
+
+    
+
   
-  theme_minimal()
-  
            
            
            
-ggplotly(GIC)
+
 
 
 
