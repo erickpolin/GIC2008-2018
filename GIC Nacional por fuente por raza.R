@@ -355,44 +355,78 @@ Cuadro_final<-Cuadro_final%>%
 
 ###### Gráfico
 
-barwidth = 0.35
 
 GIC<-ggplot()+
-  geom_col(data = indigena_melt, mapping=aes(x=as.numeric(Deciles)-0.2, y=value, fill= as.factor(variable), group=`Ethnic group`),
+  geom_col(data = indigena_melt, mapping=aes(x=as.numeric(Deciles)-0.15, y=value, fill= as.factor(variable), group=`Ethnic group`),
            width = 0.25)+
- geom_col(data = NO_melt, mapping=aes(x=as.numeric(Deciles)+0.2, y=value, fill= as.factor(variable), group=`Ethnic group`),
+ geom_col(data = NO_melt, mapping=aes(x=as.numeric(Deciles)+0.15, y=value, fill= as.factor(variable), group=`Ethnic group`),
       width = 0.25)+
-  labs(title = "Growth Incidence Curve by ethnic group, 2008-2018",
+  labs(title = "Mexico, Growth Incidence Curve by ethnic group, 2008-2018",
        subtitle = "by ethnic group",
        y="Growth rate (total)",
        x="Decile",
-       fill="Source of
-  income")+
+       fill="Source of income")+
   scale_y_continuous(breaks = seq(-20,15,1))+
-  scale_x_continuous(breaks = seq(1,11,1),labels = c("Total","I","II","III","IV","V","VI","VII","VIII","IX","X") )+
+  scale_x_continuous(breaks = seq(1,11,1),labels = c("Mean","I","II","III","IV","V","VI","VII","VIII","IX","X") )+
   geom_hline(yintercept = 0)+
   theme(axis.text.x = element_blank())+
+  annotate("text", label = round(Tasa_total_indigena[1],digits = 2),
+           x = 0.85, y = 6.1, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[1],digits = 2),
+           x = 1.15, y = 2.1, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[2],digits = 2),
+           x = 1.85, y = 13.5, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[2],digits = 2),
+           x = 2.15, y = 11.5, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[3],digits = 2),
+           x = 2.85, y = 11.5, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[3],digits = 2),
+           x = 3.15, y = 9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[4],digits = 2),
+           x = 3.85, y = 9.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[4],digits = 2),
+           x = 4.15, y = 7.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[5],digits = 2),
+           x = 4.85, y = 8.5, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[5],digits = 2),
+           x = 5.15, y = 5.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[6],digits = 2),
+           x = 5.85, y = 4.2, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[6],digits = 2),
+           x = 6.15, y = 3.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[7],digits = 2),
+           x = 6.85, y = 6.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[7],digits = 2),
+           x = 7.15, y = 2.1, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[8],digits = 2),
+           x = 7.85, y = 3.5, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[8],digits = 2),
+           x = 8.15, y = 2.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[9],digits = 2),
+           x = 8.85, y = 4.7, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[9],digits = 2),
+           x = 9.15, y = 2.8, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[10],digits = 2),
+           x = 9.85, y = 2.8, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[10],digits = 2),
+           x = 10.15, y = 2.1, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_indigena[11],digits = 2),
+           x = 10.85, y = 1.9, size = 3, colour = "black",angle=45)+
+  annotate("text", label = round(Tasa_total_NO[11],digits = 2),
+           x = 11.15, y = 2.6, size = 3, colour = "black",angle=45)+
   theme_minimal()
   
-ggplotly(GIC)
+GIC<-ggplotly(GIC)
+
+GIC
+
+saveWidget(GIC_por_raza, file="C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/Entrega septiembre/GIC by source of income and ethnic group.html")
 
 
 
 
 
 
-  annotate("text", label = round(Tasa_total_NO[1],digits = 2),
-           x = 0.8, y = 1.5, size = 3, colour = "black")+
-  annotate("text", label = round(Tasa_total_indigena[1],digits = 2),
-           x = 1.2, y = 2.8, size = 3, colour = "black")+
-  annotate("text", label = round(Tasa_total_NO[2],digits = 2),
-           x = 1.8, y = 5.5, size = 3, colour = "black")+
-  annotate("text", label = round(Tasa_total_indigena[2],digits = 2),
-           x = 2.2, y = 7.5, size = 3, colour = "black")+
-  annotate("text", label = round(Tasa_total_NO[3],digits = 2),
-           x = 2.8, y = 3.2, size = 3, colour = "black")+
-  annotate("text", label = round(Tasa_total_indigena[3],digits = 2),
-           x = 3.2, y = 5.6, size = 3, colour = "black")+
 
     
 

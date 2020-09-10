@@ -8,13 +8,13 @@ library(ggrepel)
 
 setwd(c("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/GIC2008-2018/GIC2008-2018"))
 
-deciles2008indigena<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/Nacional ingresos por decil y GINI 2008 Indigena.dbf")
+deciles2008indigena<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/Indigena/Nacional ingresos por decil y GINI 2008 Indigena.dbf")
 
-deciles2018indigena<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/Nacional Indigena ingresos por decil y GINI .dbf")
+deciles2018indigena<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/Indigena/Nacional Indigena ingresos por decil y GINI .dbf")
 
-deciles2008No<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/Nacional ingresos por decil y GINI 2008 NO Indigena.dbf")
+deciles2008No<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH2008/Nacional/No indigena/Nacional ingresos por decil y GINI 2008 NO Indigena.dbf")
 
-deciles2018No<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/Nacional NO Indigena ingresos por decil y GINI .dbf")
+deciles2018No<-read.dbf("C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/ENIGH 2018/ENIGH2018/Nacional/No indigena/Nacional NO Indigena ingresos por decil y GINI .dbf")
 
 GIC_nacional_por_raza<-data.frame(deciles2008indigena,deciles2018indigena,deciles2008No,deciles2018No)
 
@@ -74,4 +74,7 @@ GIC_por_raza<-GIC_nacional_por_raza_derretida%>%
 
 GIC_por_raza
 
-ggplotly(GIC_por_raza)
+GIC_por_raza<-ggplotly(GIC_por_raza)
+
+saveWidget(GIC_por_raza, file="C:/Users/Erick/Dropbox/GIC/GITHUB2018/GIC/Entrega septiembre/GIC by ethnic group.html")
+
